@@ -1,0 +1,184 @@
+{
+  "type": "page",
+  "body": [
+    {
+      "type": "alert",
+      "body": [
+        {
+          "type": "tpl",
+          "tpl": "🔥 Go-Amis 是由 <a href=\"#\">@Avtion</a> 基于 <a target=\"_blank\" href=\"https://baidu.github.io/amis/zh-CN/docs/index\">Amis</a>  + Golang 搭建的多功能服务平台",
+          "inline": false,
+          "wrapperComponent": "div"
+        }
+      ],
+      "level": "success"
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "title": "",
+      "type": "crud",
+      "api": "GET:/config/list",
+      "bulkActions": [],
+      "itemActions": [],
+      "features": [
+        "create"
+      ],
+      "columnsTogglable": "auto",
+      "perPageAvailable": [],
+      "messages": {},
+      "footerToolbar": [],
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "actionType": "dialog",
+          "dialog": {
+            "title": "新增页面配置",
+            "body": [
+              {
+                "type": "form",
+                "api": "POST:/config/save",
+                "body": [
+                  {
+                    "label": "页面名称",
+                    "type": "input-text",
+                    "name": "name",
+                    "required": true,
+                    "placeholder": ""
+                  },
+                  {
+                    "type": "editor",
+                    "label": "页面配置",
+                    "name": "config",
+                    "placeholder": "",
+                    "language": "json",
+                    "required": true,
+                    "size": "xxl"
+                  }
+                ],
+                "rules": []
+              }
+            ],
+            "type": "dialog",
+            "closeOnEsc": false,
+            "closeOnOutside": false,
+            "showCloseButton": true,
+            "size": "lg"
+          },
+          "level": "primary"
+        },
+        {
+          "type": "export-excel",
+          "tpl": "内容",
+          "align": "right"
+        }
+      ],
+      "mode": "table",
+      "columns": [
+        {
+          "type": "tpl",
+          "tpl": "<a target=\"_blank\" href=\"/page/${name}\">${name}</a>",
+          "inline": false,
+          "name": "name",
+          "label": "页面名称",
+          "placeholder": "-",
+          "remark": "点击可直接跳转到目标页面"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "name": "operation",
+          "buttons": [
+            {
+              "type": "button",
+              "label": "修改",
+              "actionType": "dialog",
+              "dialog": {
+                "title": "修改页面配置",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": "POST:/config/save",
+                    "body": [
+                      {
+                        "type": "input-text",
+                        "label": "页面名称",
+                        "name": "name",
+                        "readOnly": true,
+                        "required": true,
+                        "placeholder": "",
+                        "description": "无法修改页面名称"
+                      },
+                      {
+                        "label": "页面配置",
+                        "type": "editor",
+                        "name": "config",
+                        "required": true,
+                        "placeholder": "",
+                        "language": "json",
+                        "size": "xxl"
+                      }
+                    ],
+                    "rules": [],
+                    "initApi": ""
+                  }
+                ],
+                "type": "dialog",
+                "closeOnEsc": false,
+                "closeOnOutside": false,
+                "showCloseButton": true,
+                "size": "lg",
+                "data": {
+                  "&": "$$",
+                  "unique": "${unique}",
+                  "id": "${id}",
+                  "desc": "${desc}"
+                }
+              },
+              "level": "primary",
+              "disabledOn": "this.disableUpdate === 1"
+            },
+            {
+              "type": "button",
+              "label": "删除",
+              "actionType": "ajax",
+              "dialog": {
+                "title": "系统提示",
+                "body": [
+                  {
+                    "type": "form",
+                    "title": "表单",
+                    "body": [
+                      {
+                        "label": "管理员密钥",
+                        "type": "input-password",
+                        "name": "token",
+                        "required": true
+                      }
+                    ],
+                    "api": "delete:/config/${id}?token=${token}",
+                    "autoFocus": true
+                  }
+                ],
+                "type": "dialog"
+              },
+              "level": "default",
+              "disabledOn": "this.disableDelete === 1",
+              "size": "",
+              "api": "GET:/config/delete/${name}"
+            }
+          ]
+        }
+      ],
+      "showFooter": false,
+      "initFetch": true
+    }
+  ],
+  "regions": [
+    "body"
+  ],
+  "messages": {},
+  "className": "r b-a b-2x"
+}
